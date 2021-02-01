@@ -1,0 +1,88 @@
+<app-titulo [title]="title"></app-titulo>
+
+<div class="d-flex flex-row mt-2">
+  <div class="p-2 form-inline mr-auto">
+    <div class="form-group mb-2">
+      <label class="mr-2 ">
+        Filtro:
+      </label> 
+      <input type="text" 
+      class="form-control mr-2" 
+      placeholder="buscar"
+      [(ngModel)]="filter">
+    </div>
+  </div>
+</div>
+
+<table class="table table-striped mt-3">
+  <thead class="thead-light">
+    <tr>
+      <th (click)="sort('bank')">
+        Bank
+        <span *ngIf="key =='bank'">{{reverse ? '▲' : '▼'}}</span>
+      </th>
+      <th (click)="sort('account_number')">
+        Account Number
+        <span *ngIf="key =='account_number'">{{reverse ? '▲' : '▼'}}</span>
+      </th>
+      <th (click)="sort('account_type')">
+        Account Type
+        <span *ngIf="key =='account_type'">{{reverse ? '▲' : '▼'}}</span>
+      </th>
+      <th (click)="sort('transaction_date')">
+        Transaction Date
+        <span *ngIf="key =='transaction_date'">{{reverse ? '▲' : '▼'}}</span>
+      </th>
+      <th (click)="sort('transaction_type')">
+        Transaction Type
+        <span *ngIf="key =='transaction_type'">{{reverse ? '▲' : '▼'}}</span>
+      </th>
+      <th (click)="sort('amount')">
+        Amount
+        <span *ngIf="key =='amount'">{{reverse ? '▲' : '▼'}}</span>
+      </th>
+      <th (click)="sort('description')">
+        Description
+        <span *ngIf="key =='description'">{{reverse ? '▲' : '▼'}}</span>
+      </th>
+      <th>Options</th> 
+    </tr>
+  </thead>
+  <tbody *ngIf="transactionsFilters && transactionsFilters.length">
+    <tr *ngFor="let t of transactionsFilters | orderBy: key : reverse | paginate: config; let i = index">
+      <td>{{ t.bank }}</td>
+      <td>{{ t.account_number }}</td>
+      <td>{{ t.account_type }}</td>
+      <td>{{ t.transaction_date }}</td>
+      <td>{{ t.transaction_type }}</td>
+      <td>{{ t.amount }}</td>
+      <td>{{ t.description }}</td>
+      <td>
+        <div class="btn-group">
+          <button class="btn btn-sm btn-success"> 
+          <!-- tooltip="Editar" (click)="editarUser(user, template)"> -->
+            <i class="fa fa-edit"></i>
+          </button>
+          <button class="btn btn-sm btn-danger">
+          <!-- tooltip="Excluir" (click)="excluirUser(user, confirm)"> -->
+            <i class="fa fa-eraser"></i>
+          </button>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot *ngIf="!(transactionsFilters.length)">
+    <tr>
+      <td colspan="8" class="text-center">
+        <h4>Nenhum item encontrado!</h4>
+      </td>
+    </tr>
+  </tfoot>
+</table>
+<div class="text-right">
+  <pagination-controls 
+    id="PaginationTransactions"
+    (pageChange)="pageChanged($event)"
+    previousLabel="Previous"
+    nextLabel="Next"></pagination-controls>
+</div>
