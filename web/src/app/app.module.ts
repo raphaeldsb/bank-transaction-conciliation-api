@@ -14,17 +14,21 @@ import { AppComponent } from './app.component';
 import { NavComponent } from '../nav/nav.component';
 import { ListComponent } from '../list/list.component';
 import { ToastrModule } from 'ngx-toastr';
-
 import { BankTransactionsService } from '../services/BankTransactions.service';
+import { DateTimeFormatPipePipe } from '../helps/DateTimeFormatPipe.pipe';
+import { NgxUploaderModule } from 'ngx-uploader';
+
 
 @NgModule({
   declarations: [		
     AppComponent,
     NavComponent,
-    ListComponent
+    ListComponent,
+    DateTimeFormatPipePipe
    ],
-  imports: [
+  imports: [ 
     BrowserModule,
+    NgxUploaderModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,

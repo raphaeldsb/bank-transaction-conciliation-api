@@ -52,6 +52,7 @@ namespace BankTransactionConciliationAPI
             this.ConfigureMapper(services);
             this.ConfigureMongo(services);
             this.ConfigureSwagger(services);
+            this.ConfigureCors(services);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -61,6 +62,7 @@ namespace BankTransactionConciliationAPI
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseRouting();
             app.UseCustomExceptionHandler();
 
@@ -115,6 +117,21 @@ namespace BankTransactionConciliationAPI
                     {
                         Title = "Bank Transaction Conciliation Api",
                         Version = "v1"
+                    });
+            });
+        }
+
+        public void ConfigureCors(IServiceCollection services)
+        {
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder
+                            .AllowAnyOrigin()
+                            .AllowAnyMethod()
+                            .AllowAnyHeader();
                     });
             });
         }
